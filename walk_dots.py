@@ -39,9 +39,13 @@ class semicircle:
         self.a += self.a_step
         self.x += self.x_step + self.a_step
         
-        if self.x > self.x_max + self.a or self.x  < self.x_min + self.a:
+        if self.x > self.x_max + self.a:
+            self.x = self.x_max + self.a
             self.x_step *= -1
-            self.x += self.x_step + self.a_step* self.x_step / abs(self.x_step) # Convert a_step to the same sign as x_step
+        elif  self.x  < self.x_min + self.a:
+            self.x = self.x_min + self.a
+            self.x_step *= -1
+
 
 pos = math.cos(math.radians(65))  # To make 180-65-65 = 50 deg total stride
 appendages = [
@@ -65,6 +69,7 @@ for appendage in appendages:
 torso, = ax.plot([appendages[0]['data'].a,appendages[0]['data'].a],[0,3], 'r-')
 head, = ax.plot([appendages[0]['data'].a],[3], 'ro', markersize=20)
 
+
 # animation function.  This is called sequentially
 def animate(i):
 
@@ -78,6 +83,11 @@ def animate(i):
     # Plot head and torso
     torso.set_data([appendages[0]['data'].a,appendages[0]['data'].a],[0,3])
     head.set_data([appendages[0]['data'].a],[3])
+
+    # Grow x axis every so often
+
+    if i == 0:
+        ax.set_xlim(appendages[0]['data'].a - 5, appendages[0]['data'].a + 5)
 
     return appendage['plot'],
 
