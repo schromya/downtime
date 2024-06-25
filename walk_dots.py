@@ -58,8 +58,8 @@ appendages = [
     {'plot': None, 'data': semicircle(1*pos, -1*pos, 1*pos, 0.02, 1, 0, 0.01, 2)},  # Arm 2
 ]
 
-fig = plt.figure()
-ax = plt.axes(xlim=(-5, 5), ylim=(-5, 5))
+fig = plt.figure(figsize=(15, 4))
+ax = plt.axes(xlim=(-20, 20), ylim=(-5, 5))
 
 # Set dot appendages
 for appendage in appendages:
@@ -84,10 +84,9 @@ def animate(i):
     torso.set_data([appendages[0]['data'].a,appendages[0]['data'].a],[0,3])
     head.set_data([appendages[0]['data'].a],[3])
 
-    # Grow x axis every so often
-
-    if i == 0:
-        ax.set_xlim(appendages[0]['data'].a - 5, appendages[0]['data'].a + 5)
+    # # Grow x axis every so often
+    # if i == 0:
+    #     ax.set_xlim(appendages[0]['data'].a - 5, appendages[0]['data'].a + 5)
 
     return appendage['plot'],
 
