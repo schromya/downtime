@@ -2,7 +2,7 @@ import math
 from matplotlib import pyplot as plt
 from matplotlib import animation
 
-class double_pendulum():
+class double_pendulum:
     """
     https://personal.math.ubc.ca/~israel/m215/doublpen/doublpen.html#:~:text=A%20double%20pendulum%20consists%20of%20two%20balls%20hanging,can%20use%20a%20linear%20approximation%20to%20their%20motion.
     """
