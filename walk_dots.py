@@ -62,17 +62,22 @@ for appendage in appendages:
     appendage['plot'], = ax.plot([appendage['data'].x],[appendage['data'].y], 'r-')
 
 # Connect torso and head
-# torso, = ax.plot([0,0],[0,3], 'r-')
-# head, = ax.plot([0],[3], 'ro', markersize=20)
+torso, = ax.plot([appendages[0]['data'].a,appendages[0]['data'].a],[0,3], 'r-')
+head, = ax.plot([appendages[0]['data'].a],[3], 'ro', markersize=20)
 
 # animation function.  This is called sequentially
 def animate(i):
 
     for appendage in appendages:
-        appendage['data'].move() # Move appendages
-        # Plot appendages and attach them to torso]
-        print("append a", appendage['data'].a)
+         # Move appendages
+        appendage['data'].move()
+
+        # Plot appendages and attach them to torso
         appendage['plot'].set_data([appendage['data'].x, appendage['data'].a],[appendage['data'].y, appendage['data'].b]) 
+
+    # Plot head and torso
+    torso.set_data([appendages[0]['data'].a,appendages[0]['data'].a],[0,3])
+    head.set_data([appendages[0]['data'].a],[3])
 
     return appendage['plot'],
 
