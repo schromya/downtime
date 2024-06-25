@@ -50,12 +50,12 @@ class semicircle:
 pos = math.cos(math.radians(65))  # To make 180-65-65 = 50 deg total stride
 appendages = [
     # Connected to lower torso (0,0)
-    {'plot': None, 'data': semicircle(-2*pos, -2*pos, 2*pos, 0.04, 2, 0, 0.01, 0)},  # Leg 1 
-    {'plot': None, 'data': semicircle(2*pos, -2*pos, 2*pos, 0.04, 2, 0, 0.01, 0)},  # Leg 2
+    {'plot': None, 'data': semicircle(-2*pos, -2*pos, 2*pos, 0.04, 2, 0, 0.04, 0)},  # Leg 1 
+    {'plot': None, 'data': semicircle(2*pos, -2*pos, 2*pos, 0.04, 2, 0, 0.04, 0)},  # Leg 2
     
     # Connected to upper torso (0, 2) 
-    {'plot': None, 'data': semicircle(-1*pos, -1*pos, 1*pos, 0.02, 1, 0, 0.01, 2)},  # Arm 1
-    {'plot': None, 'data': semicircle(1*pos, -1*pos, 1*pos, 0.02, 1, 0, 0.01, 2)},  # Arm 2
+    {'plot': None, 'data': semicircle(-1*pos, -1*pos, 1*pos, 0.02, 1, 0, 0.04, 2)},  # Arm 1
+    {'plot': None, 'data': semicircle(1*pos, -1*pos, 1*pos, 0.02, 1, 0, 0.04, 2)},  # Arm 2
 ]
 
 fig = plt.figure(figsize=(15, 4))
