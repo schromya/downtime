@@ -1,7 +1,7 @@
 import math
 from matplotlib import pyplot as plt
 from matplotlib import animation
-
+from pynput import keyboard
 class semicircle:
     """
     Dot moves in lower half of semicircle (-y)
@@ -64,6 +64,33 @@ class semicircle:
             self.x_step *= -1
 
 
+class KeyboardHandler:
+    a_pressed = False
+    d_pressed = False
+
+    def on_press(self, key):
+        print(f"Key pressed:{key}")
+        if key == 'a':
+            self.a_pressed = True
+        elif key == 'd':
+            self.d_pressed = True
+
+
+    def on_release(self, key):
+        print(f"Key released:{key}")
+        if key == 'a':
+            self.a_pressed = False
+        elif key == 'd':
+            self.d_pressed = False
+
+    def __init__(self):
+        listener = keyboard.Listener(
+            on_press=self.on_press,
+            on_release=self.on_release)
+        listener.start()
+
+
+
 
 pos = math.cos(math.radians(65))  # To make 180-65-65 = 50 deg total stride
 appendages = [
@@ -87,6 +114,7 @@ for appendage in appendages:
 torso, = ax.plot([appendages[0]['data'].a,appendages[0]['data'].a],[0,3], 'r-')
 head, = ax.plot([appendages[0]['data'].a],[3], 'ro', markersize=20)
 
+keys = KeyboardHandler()
 
 # animation function.  This is called sequentially
 def animate(i):
@@ -106,6 +134,6 @@ def animate(i):
     return appendage['plot'],
 
 # call the animator.  blit=True means only re-draw the parts that have changed.
-anim = animation.FuncAnimation(fig, animate, frames=200, interval=10)
+anim = animation.FuncAnimation(fig, animate, frames=200, interval=10,)
 
 plt.show()
