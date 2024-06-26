@@ -28,23 +28,41 @@ class semicircle:
 
         self.y = 0
 
-        self.move() # Calculate y correctly for x=-1
+        self.move_right() # Calculate y correctly for x=-1
 
-    def move(self):
+
+    def move_right(self):
         """
-        Calculates y and then increments x by x_step. Bound between x_min and x_max.
+        Calculates y and then increments x by x_step and a by a_step. 
         """
-        self.y = -math.sqrt(self.r ** 2 - (self.x - self.a) ** 2) + self.b
-        
         self.a += self.a_step
         self.x += self.x_step + self.a_step
+        self._bound_radial_movement()
+
+        self.y = -math.sqrt(self.r ** 2 - (self.x - self.a) ** 2) + self.b
         
+    def move_left(self):
+        """
+        Calculates y and then increments x by x_step and decrements a by a_step. 
+        """
+        self.a -= self.a_step
+        self.x += self.x_step - self.a_step
+        self._bound_radial_movement()
+
+        self.y = -math.sqrt(self.r ** 2 - (self.x - self.a) ** 2) + self.b
+        
+
+    def _bound_radial_movement(self):
+        """
+        Bounds between x_min + self.a and x_max + self.a.
+        """
         if self.x > self.x_max + self.a:
             self.x = self.x_max + self.a
             self.x_step *= -1
         elif  self.x  < self.x_min + self.a:
             self.x = self.x_min + self.a
             self.x_step *= -1
+
 
 
 pos = math.cos(math.radians(65))  # To make 180-65-65 = 50 deg total stride
@@ -75,7 +93,7 @@ def animate(i):
 
     for appendage in appendages:
          # Move appendages
-        appendage['data'].move()
+        appendage['data'].move_left()
 
         # Plot appendages and attach them to torso
         appendage['plot'].set_data([appendage['data'].x, appendage['data'].a],[appendage['data'].y, appendage['data'].b]) 
@@ -84,9 +102,6 @@ def animate(i):
     torso.set_data([appendages[0]['data'].a,appendages[0]['data'].a],[0,3])
     head.set_data([appendages[0]['data'].a],[3])
 
-    # # Grow x axis every so often
-    # if i == 0:
-    #     ax.set_xlim(appendages[0]['data'].a - 5, appendages[0]['data'].a + 5)
 
     return appendage['plot'],
 
