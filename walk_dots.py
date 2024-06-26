@@ -69,26 +69,25 @@ class KeyboardHandler:
     d_pressed = False
 
     def on_press(self, key):
-        print(f"Key pressed:{key}")
-        if key == 'a':
+        if key == keyboard.KeyCode.from_char('a'):
             self.a_pressed = True
-        elif key == 'd':
+        elif key ==  keyboard.KeyCode.from_char('d'):
             self.d_pressed = True
 
 
     def on_release(self, key):
-        print(f"Key released:{key}")
-        if key == 'a':
+        if key == keyboard.KeyCode.from_char('a'):
             self.a_pressed = False
-        elif key == 'd':
+        elif key == keyboard.KeyCode.from_char('d'):
             self.d_pressed = False
 
     def __init__(self):
+        self.a_pressed = False
+        self.d_pressed = False
         listener = keyboard.Listener(
             on_press=self.on_press,
             on_release=self.on_release)
         listener.start()
-
 
 
 
@@ -114,14 +113,17 @@ for appendage in appendages:
 torso, = ax.plot([appendages[0]['data'].a,appendages[0]['data'].a],[0,3], 'r-')
 head, = ax.plot([appendages[0]['data'].a],[3], 'ro', markersize=20)
 
-keys = KeyboardHandler()
+key_handler = KeyboardHandler()
 
 # animation function.  This is called sequentially
-def animate(i):
+def animate(i, key_handler):
 
     for appendage in appendages:
-         # Move appendages
-        appendage['data'].move_left()
+        # Move appendages
+        if key_handler.a_pressed:
+            appendage['data'].move_left()
+        elif key_handler.d_pressed:
+            appendage['data'].move_right()
 
         # Plot appendages and attach them to torso
         appendage['plot'].set_data([appendage['data'].x, appendage['data'].a],[appendage['data'].y, appendage['data'].b]) 
@@ -134,6 +136,6 @@ def animate(i):
     return appendage['plot'],
 
 # call the animator.  blit=True means only re-draw the parts that have changed.
-anim = animation.FuncAnimation(fig, animate, frames=200, interval=10,)
+anim = animation.FuncAnimation(fig, animate, frames=200, interval=10, fargs=(key_handler,))
 
 plt.show()
